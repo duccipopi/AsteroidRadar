@@ -1,7 +1,6 @@
 package com.udacity.asteroidradar.api.data
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 data class AsteroidFeed(
     val links: LinksWrapper,

@@ -2,6 +2,8 @@ package com.udacity.asteroidradar.api
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.udacity.asteroidradar.api.services.NasaAsteroidsService
+import com.udacity.asteroidradar.api.services.NasaPictureOfDayService
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 

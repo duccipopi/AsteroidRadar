@@ -1,5 +1,6 @@
-package com.udacity.asteroidradar.api
+package com.udacity.asteroidradar.api.services
 
+import com.udacity.asteroidradar.api.NasaApi
 import com.udacity.asteroidradar.api.NasaApi.API_KEY
 import com.udacity.asteroidradar.domain.PictureOfDay
 import retrofit2.http.GET
