@@ -21,7 +21,17 @@ class NasaApiTest {
         runBlocking {
             val feed = NasaApi.asteroidsService.getFeed("2021-08-12")
 
-            System.out.println(feed.toString())
+            assert(feed.nearEarthObjects.isNotEmpty())
+        }
+    }
+
+    @Test
+    fun getPictureOfDay() {
+
+        runBlocking {
+            val pod = NasaApi.pictureOfDayService.get()
+
+            assert(pod.url.isNotEmpty())
         }
     }
 

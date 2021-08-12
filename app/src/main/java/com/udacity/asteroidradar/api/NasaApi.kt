@@ -2,8 +2,6 @@ package com.udacity.asteroidradar.api
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.udacity.asteroidradar.api.data.NearEarthObject
-import com.udacity.asteroidradar.api.support.PairJsonAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -16,7 +14,6 @@ object NasaApi {
 
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
-        .add(PairJsonAdapter())
         .build()
 
     private val retrofit = Retrofit.Builder()
