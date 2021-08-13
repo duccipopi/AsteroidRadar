@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import com.udacity.asteroidradar.api.NasaApi
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -21,7 +22,7 @@ class NasaApiTest {
         runBlocking {
             val feed = NasaApi.asteroidsService.getFeed("2021-08-12")
 
-            assert(feed.nearEarthObjects.isNotEmpty())
+            Assert.assertTrue(feed.nearEarthObjects.isNotEmpty())
         }
     }
 
@@ -31,7 +32,7 @@ class NasaApiTest {
         runBlocking {
             val pod = NasaApi.pictureOfDayService.get()
 
-            assert(pod.url.isNotEmpty())
+            Assert.assertTrue(pod.url.isNotEmpty())
         }
     }
 

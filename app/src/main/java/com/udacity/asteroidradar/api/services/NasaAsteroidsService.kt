@@ -2,7 +2,7 @@ package com.udacity.asteroidradar.api.services
 
 import com.udacity.asteroidradar.api.NasaApi
 import com.udacity.asteroidradar.api.NasaApi.API_KEY
-import com.udacity.asteroidradar.api.data.AsteroidFeed
+import com.udacity.asteroidradar.api.model.AsteroidFeed
 import retrofit2.http.GET
 import retrofit2.http.Query
 
