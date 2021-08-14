@@ -1,9 +1,12 @@
 package com.udacity.asteroidradar.api
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.udacity.asteroidradar.api.services.NasaAsteroidsService
 import com.udacity.asteroidradar.api.services.NasaPictureOfDayService
+import com.udacity.asteroidradar.api.support.httpClient
+import com.udacity.asteroidradar.api.support.isDebugEnabled
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -20,15 +23,15 @@ object NasaApi {
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .baseUrl(BASE_URL)
+        .apply { if (isDebugEnabled) client(httpClient) }
         .build()
 
-    val asteroidsService: NasaAsteroidsService by lazy {
+    val asteroidsService: NasaAsteroidsService =
         retrofit.create(NasaAsteroidsService::class.java)
-    }
 
-    val pictureOfDayService: NasaPictureOfDayService by lazy {
+    val pictureOfDayService: NasaPictureOfDayService =
         retrofit.create(NasaPictureOfDayService::class.java)
-    }
 
 }

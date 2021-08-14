@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ListItemTitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/default_text_color</item>
+    </style>
+
+    <style name="ListItemSubTitle">
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

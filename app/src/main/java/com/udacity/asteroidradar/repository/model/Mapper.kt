@@ -9,7 +9,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 fun Long.asDateString(): String {
-    return SimpleDateFormat("YYYY-MM-dd", Locale.getDefault()).format(this)
+    return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(this)
 }
 
 fun List<DatabaseAsteroid>.asDomainModel(): List<Asteroid> {
@@ -17,7 +17,7 @@ fun List<DatabaseAsteroid>.asDomainModel(): List<Asteroid> {
         Asteroid(
             id = it.id,
             codename = it.codename,
-            closeApproachDate = (it.closeApproachDate * 1000L).asDateString(),
+            closeApproachDate = it.closeApproachDate.asDateString(),
             absoluteMagnitude = it.absoluteMagnitude,
             estimatedDiameter = it.estimatedDiameter,
             relativeVelocity = it.relativeVelocity,
