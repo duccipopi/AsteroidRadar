@@ -1,18 +1,18 @@
 package com.udacity.asteroidradar
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import com.udacity.asteroidradar.database.AsteroidsDao
 import com.udacity.asteroidradar.database.AsteroidsRadarDatabase
 import com.udacity.asteroidradar.database.model.DatabaseAsteroid
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
+import org.junit.*
 import java.util.*
 
 class DatabaseTest {
+    @get:Rule
+    var rule = InstantTaskExecutorRule()
 
     lateinit var context: Context
     lateinit var db: AsteroidsRadarDatabase
@@ -45,7 +45,7 @@ class DatabaseTest {
 
         asteroidDao.insertAll(asteroid)
 
-        val query: List<DatabaseAsteroid>? = null
+        val query: List<DatabaseAsteroid> = waitForData(asteroidDao.getAsteroids()) as List<DatabaseAsteroid>
 
         Assert.assertNotNull(
             "Expecting 1 asteroid, instead got null",
@@ -92,14 +92,14 @@ class DatabaseTest {
         val expects = mutableListOf(*asteroids)
 
         do {
-            val query = asteroidDao.getAsteroids(startDate).value
+            val query = waitForData(asteroidDao.getAsteroids(startDate)) as List<DatabaseAsteroid>
 
             Assert.assertTrue(
-                "Expecting ${asteroids.size}, instead got ${query?.size}",
-                (query != null) && (query.size == asteroids.size)
+                "Expecting ${expects.size}, instead got ${query.size}",
+                query.size == expects.size
             )
 
-            for ((expected, entity) in expects.zip(query!!)) {
+            for ((expected, entity) in expects.zip(query)) {
                 Assert.assertEquals(
                     "Expected $expected, instead got $entity",
                     expected,
