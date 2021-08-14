@@ -1,3 +1,7 @@
+Asteroid Radar
+===============
+Second project from [Android Kotlin Developer](https://www.udacity.com/course/android-kotlin-developer-nanodegree--nd940)
+
 Project Instructions
 =====================
 
