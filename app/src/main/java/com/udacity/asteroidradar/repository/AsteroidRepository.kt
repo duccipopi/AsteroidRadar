@@ -7,7 +7,6 @@ import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.api.NasaApi
 import com.udacity.asteroidradar.database.AsteroidsRadarDatabase
 import com.udacity.asteroidradar.domain.Asteroid
-import com.udacity.asteroidradar.domain.PictureOfDay
 import com.udacity.asteroidradar.repository.model.asDatabaseModel
 import com.udacity.asteroidradar.repository.model.asDateString
 import com.udacity.asteroidradar.repository.model.asDomainModel
@@ -33,7 +32,6 @@ class AsteroidRepository(context: Context) {
                     NasaApi.asteroidsService.getFeed(Calendar.getInstance().timeInMillis.asDateString())
                 database.asteroidsDao.insertAll(*feed.asDatabaseModel())
             } catch (e: Exception) {
-                // trying later
                 Log.e(AsteroidRepository::class.simpleName, "Could not get the feed: $e")
             }
         }

@@ -3,7 +3,10 @@ package com.udacity.asteroidradar.main
 import android.app.Application
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +17,8 @@ import com.udacity.asteroidradar.domain.PictureOfDay
 import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
 
+enum class Status { LOADING, DONE, ERROR }
+
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // Picture of day from NasaApi or Placeholder
@@ -23,6 +28,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // List of Asteroids form repository
     lateinit var asteroids: LiveData<List<Asteroid>>
+
+    // Monitor for repository status
+    private val _repoStatus = MutableLiveData<Status>()
+    val repoStatus: LiveData<Status>
+        get() = _repoStatus
 
     private val repository: AsteroidRepository by lazy {
         AsteroidRepository(application.applicationContext)
@@ -45,8 +55,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun loadAsteroids() {
         asteroids = repository.asteroids
+        _repoStatus.value = Status.LOADING
         viewModelScope.launch {
             repository.refresh()
+            _repoStatus.value = Status.DONE
         }
     }
 
@@ -86,7 +98,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    class AsteroidDiffCallback: DiffUtil.ItemCallback<Asteroid>() {
+    class AsteroidDiffCallback : DiffUtil.ItemCallback<Asteroid>() {
         override fun areItemsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
             return oldItem.id == newItem.id
         }

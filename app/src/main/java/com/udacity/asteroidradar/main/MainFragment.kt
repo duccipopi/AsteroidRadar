@@ -14,8 +14,10 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
@@ -27,6 +29,24 @@ class MainFragment : Fragment() {
         viewModel.asteroids.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+            }
+        })
+
+        viewModel.repoStatus.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                when (it) {
+                    Status.LOADING -> {
+                        binding.statusLoadingWheel.visibility = View.VISIBLE
+                        binding.asteroidRecycler.visibility = View.INVISIBLE
+                        binding.notFound.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.statusLoadingWheel.visibility = View.GONE
+                        binding.asteroidRecycler.visibility = View.VISIBLE
+                        binding.notFound.visibility =
+                            if (viewModel.asteroids.value.isNullOrEmpty()) View.VISIBLE else View.GONE
+                    }
+                }
             }
         })
 
