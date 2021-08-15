@@ -3,10 +3,7 @@ package com.udacity.asteroidradar.main
 import android.app.Application
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +31,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val repoStatus: LiveData<Status>
         get() = _repoStatus
 
+    val filter: MutableLiveData<Int?> = MutableLiveData(0)
+
     private val repository: AsteroidRepository by lazy {
         AsteroidRepository(application.applicationContext)
     }
@@ -57,11 +56,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         asteroids = repository.asteroids
         _repoStatus.value = Status.LOADING
         viewModelScope.launch {
-            repository.refresh()
-            _repoStatus.value = Status.DONE
+            try {
+                repository.refresh()
+                _repoStatus.value = Status.DONE
+            } catch (e: java.lang.Exception) {
+                _repoStatus.value = Status.ERROR
+            }
+        }
+
+        asteroids = Transformations.switchMap(filter) { days ->
+            repository.filter(days)
         }
     }
-
 
     class AsteroidsAdapter(private val clickListener: AsteroidClickListener) :
         ListAdapter<Asteroid, AsteroidViewHolder>(AsteroidDiffCallback()) {

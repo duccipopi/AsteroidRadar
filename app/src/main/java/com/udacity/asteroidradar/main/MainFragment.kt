@@ -26,8 +26,6 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = MainViewModel.AsteroidsAdapter(MainViewModel.AsteroidClickListener {
-            Toast.makeText(requireContext(), "Clicked in ${it.codename}", Toast.LENGTH_SHORT).show()
-
             findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
         })
         binding.asteroidRecycler.adapter = adapter
@@ -69,6 +67,11 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        viewModel.filter.value = when(item.itemId) {
+            R.id.show_week_asteroids -> 7
+            R.id.show_today_asteroids -> 0
+            else -> null // R.id.show_all_asteroids
+        }
         return true
     }
 }
