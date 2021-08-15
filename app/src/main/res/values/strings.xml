@@ -23,4 +23,6 @@
     <string name="nasa_picture_of_day_content_description_format">NASA\'s picture of day: %s</string>
     <string name="no_asteroids_found_black_hole">No asteroids found\nMaybe a black hole got them all</string>
     <string name="black_hole_icon_description">Black hole icon</string>
+    <string name="asteroid_codename_hint">Asteroid codename</string>
+    <string name="asteroid_approach_date_hint">Asteroid approach date</string>
 </resources>
