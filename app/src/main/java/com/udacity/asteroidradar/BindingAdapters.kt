@@ -65,3 +65,4 @@ fun bindImageViewToHazardous(imgView: ImageView, hazardous: Boolean) {
         else R.drawable.ic_status_normal
     )
 }
+

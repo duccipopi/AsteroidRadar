@@ -63,7 +63,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    class AsteroidsAdapter() :
+    class AsteroidsAdapter(private val clickListener: AsteroidClickListener) :
         ListAdapter<Asteroid, AsteroidViewHolder>(AsteroidDiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AsteroidViewHolder {
@@ -71,7 +71,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         override fun onBindViewHolder(holder: AsteroidViewHolder, position: Int) {
-            holder.bind(getItem(position))
+            holder.bind(getItem(position), clickListener)
         }
 
     }
@@ -91,8 +91,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-        fun bind(item: Asteroid) {
+        fun bind(item: Asteroid, clickListener: AsteroidClickListener) {
             binding.asteroid = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -107,6 +108,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             return oldItem == newItem
         }
 
+    }
+
+    class AsteroidClickListener(val clickListener: (asteroid: Asteroid) -> Unit) {
+        fun onClick(asteroid: Asteroid) = clickListener(asteroid)
     }
 
 
