@@ -15,7 +15,7 @@ object NasaApi {
     const val DEFAULT_END_DATE_DAYS = 7
     const val BASE_URL = "https://api.nasa.gov/"
 
-    const val API_KEY = "api_key=QLSw0wJoCkH7InXrQEM8OuQxpo39prWTR0HibvNb"
+    const val API_KEY = "api_key=DEMO_KEY"
 
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
